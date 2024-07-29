@@ -1,5 +1,6 @@
 import model from "./model.js";
 
+
 export const createUser = (user) => {
   delete user._id;  // Make sure _id is not included in new user data
   return model.create(user);
@@ -27,3 +28,5 @@ export const findUsersByPartialName = (partialName) => {
     $or: [{ firstName: { $regex: regex } }, { lastName: { $regex: regex } }]
   });
 };
+
+
