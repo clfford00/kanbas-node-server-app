@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import 'dotenv/config';
 import session from 'express-session';
 import cors from 'cors';
+
 import UserRoutes from './Users/routes.js';
 import Hello from './Hello.js';
 import CourseRoutes from './Kanbas/Courses/routes.js';
@@ -13,7 +14,7 @@ const app = express();
 
 // Database connection
 const CONNECTION_STRING = process.env.MONGO_CONNECTION_STRING || 'mongodb://127.0.0.1:27017/kanbas';
-mongoose.connect(CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(CONNECTION_STRING);
 
 // Middleware setup
 app.use(cors({

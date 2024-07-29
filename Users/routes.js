@@ -64,10 +64,7 @@ export default function UserRoutes(app) {
   };
 
   const profile = async (req, res) => {
-    if (!req.session) {
-      res.sendStatus(401);
-      return;
-    }
+    console.log('Session data:', req.session); // Add this line
     const currentUser = req.session["currentUser"];
     if (!currentUser) {
       res.sendStatus(401);
@@ -75,6 +72,7 @@ export default function UserRoutes(app) {
     }
     res.json(currentUser);
   };
+  
 
   const signout = (req, res) => {
     req.session.destroy();
