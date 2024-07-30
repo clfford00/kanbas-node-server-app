@@ -28,8 +28,8 @@ const sessionOptions = {
   store: MongoStore.create({ mongoUrl: CONNECTION_STRING }),
   cookie: {
     httpOnly: true,
-    sameSite: 'none',
-    secure: process.env.NODE_ENV !== 'development',
+    sameSite: process.env.NODE_ENV === 'development' ? 'lax' : 'none', // Adjust sameSite based on environment
+    secure: process.env.NODE_ENV !== 'development' // Secure cookies in production
   }
 };
 
