@@ -1,30 +1,18 @@
-import * as dao from "./dao.js";
+import model from "./model.js";
 
-export default function ModuleRoutes(app) {
-  const createModule = async (req, res) => {
-    const courseId = req.params.courseId;
-    const module = await dao.createModule(courseId, req.body);
-    res.json(module);
-  };
+export const createModule = async (courseId, module) => {
+  module.course = courseId;  // Assign the course ID to the module
+  return await model.create(module);
+};
 
-  const deleteModule = async (req, res) => {
-    const status = await dao.deleteModule(req.params.moduleId);
-    res.json(status);
-  };
+export const deleteModule = async (moduleId) => {
+  return await model.deleteOne({ _id: moduleId });
+};
 
-  const findModulesForCourse = async (req, res) => {
-    const modules = await dao.findModulesForCourse(req.params.courseId);
-    res.json(modules);
-  };
+export const findModulesForCourse = async (courseId) => {
+  return await model.find({ course: courseId }).populate('course');
+};
 
-  const updateModule = async (req, res) => {
-    const { moduleId } = req.params;
-    const status = await dao.updateModule(moduleId, req.body);
-    res.json(status);
-  };
-
-  app.post("/api/modules/course/:courseId", createModule);
-  app.delete("/api/modules/:moduleId", deleteModule);
-  app.get("/api/modules/course/:courseId", findModulesForCourse);
-  app.put("/api/modules/:moduleId", updateModule);
-}
+export const updateModule = async (moduleId, module) => {
+  return await model.updateOne({ _id: moduleId }, { $set: module });
+};
